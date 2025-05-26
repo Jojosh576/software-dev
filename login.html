@@ -123,34 +123,32 @@ body {
       const username = document.getElementById('logemail').value;
       const password = document.getElementById('logpass').value;
       
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password })
-        });
+      // Dummy credentials
+      const dummyUser = {
+        username: 'user',
+        password: 'user123',
+        role: 'user'
+      };
 
-        const data = await response.json();
-        
-        if (response.ok) {
-          // Simpan token dan info user
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          
-          // Redirect berdasarkan role
-          if (data.user.role === 'admin') {
-            window.location.href = 'Tampilan awal.html';
-          } else {
-            window.location.href = 'index.html';
+      // Check credentials
+      if (username === dummyUser.username && password === dummyUser.password) {
+        // Simulate successful login
+        const dummyResponse = {
+          token: 'dummy-user-token-123',
+          user: {
+            username: dummyUser.username,
+            role: dummyUser.role
           }
-        } else {
-          alert(data.error || 'Login gagal');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat login');
+        };
+
+        // Store dummy data
+        localStorage.setItem('token', dummyResponse.token);
+        localStorage.setItem('user', JSON.stringify(dummyResponse.user));
+        
+        // Redirect to user dashboard
+        window.location.href = 'index.html';
+      } else {
+        alert('Username atau password salah!');
       }
     });
   </script>
